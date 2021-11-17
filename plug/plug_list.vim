@@ -43,10 +43,13 @@ Plug 'sbdchd/neoformat', {'on':'Neoformat'}
 Plug 'honza/vim-snippets',{ 'for': ['lua', 'c', 'h', 'cpp', 'py', 'json', 'go', 'java', 'vim', 'hs'] }
 Plug 'dhruvasagar/vim-table-mode', { 'for': 'markdown' }
 Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'fatih/vim-go', { 'for': ['go', 'vim-plug'], 'tag': '*' }
 Plug 'junegunn/fzf', {'on':['Files', 'History', 'Colors', 'Rg', 'Marks'] }
 Plug 'junegunn/fzf.vim', {'on':['Files', 'History', 'Colors', 'Rg', 'Marks']}
 Plug 'scrooloose/nerdcommenter'
 Plug 'neoclide/coc.nvim',{'branch':'release'}
+Plug 'kdheepak/lazygit.nvim'
+Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle', 'for': ['text', 'markdown', 'vim-plug'] }
 
 call plug#end()
+

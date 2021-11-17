@@ -1,4 +1,12 @@
 " ===
+" === System
+" ===
+"set clipboard=unnamedplus
+let &t_ut=''
+set autochdir
+
+
+" ===
 " === Editor behavior
 " ===
 set exrc
