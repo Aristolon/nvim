@@ -50,6 +50,7 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'neoclide/coc.nvim',{'branch':'release'}
 Plug 'kdheepak/lazygit.nvim'
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle', 'for': ['text', 'markdown', 'vim-plug'] }
+Plug 'junegunn/goyo.vim'
 
 call plug#end()
 
