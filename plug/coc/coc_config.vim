@@ -21,8 +21,8 @@ let g:coc_global_extensions = [
       \ 'coc-actions',
       \ 'coc-db',
       \ 'coc-yank']
-vmap <A-m> <Plug>(coc-codeaction-selected)<CR>
-nmap <A-m> <Plug>(coc-codeaction-selected)<CR>
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>aw  <Plug>(coc-codeaction-selected)w
 augroup coc_event
   autocmd!
   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')

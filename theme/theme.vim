@@ -12,6 +12,5 @@ set termguicolors
 let g:space_vim_italic=1
 let g:enable_bold_font=1
 let g:enable_italic_font=1
-let &t_ut=''
 " let g:oceanic_material_transparent_background = 1
 " let g:hybrid_transparent_background = 1

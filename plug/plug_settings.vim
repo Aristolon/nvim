@@ -62,7 +62,8 @@ let g:translator_window_max_height=0.3
 let g:translator_default_engines=['youdao' , 'google']
 
 "Vim-table-mode设置
-map <LEADER>tm :TableModeToggle<CR>
+noremap <LEADER>tm :TableModeToggle<CR>
+let g:table_mode_cell_text_object_i_map = 'k<Bar>'
 
 "Neoformat设置
 nnoremap <LEADER>fm :Neoformat<CR>
