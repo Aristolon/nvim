@@ -1,6 +1,6 @@
-"========
-"主题设置
-"========
+" ===
+" === Themes Settings
+" ===
 color OceanicNext
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set background=dark
