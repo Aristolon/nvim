@@ -1,346 +1,214 @@
-"============
-"功能插件设置
-"============
-"COC设置
+" ===================== Start of Plugin Settings =====================
+
+" ===
+" === coc.nvim
+" ===
 source ~/.config/nvim/plug/coc/coc_config.vim
 
-"floaterm设置
-hi Floaterm guibg=black
-hi FloatermBorder guibg=none guifg=cyan
-let g:floaterm_position = 'center'
-let g:floaterm_wintype = 'floating'
-noremap <LEADER>ftn :FloatermNew<CR>
-noremap <LEADER>ftk :FloatermKill<CR>
+" ===
+" === vim-instant-markdown
+" ===
+let g:instant_markdown_slow = 0
+let g:instant_markdown_autostart = 0
+" let g:instant_markdown_open_to_the_world = 1
+" let g:instant_markdown_allow_unsafe_content = 1
+" let g:instant_markdown_allow_external_content = 0
+" let g:instant_markdown_mathjax = 1
+let g:instant_markdown_autoscroll = 1
 
-"OpenBrowser设置
-let g:netrw_nogx = 1
-nmap gx <Plug>(openbrowser-smart-search)
-vmap gx <Plug>(openbrowser-smart-search)
-nmap gu <Plug>(openbrowser-open)
-vmap gu <Plug>(openbrowser-open)
-
-" CompleteParameter设置
-inoremap <silent><expr> ( complete_parameter#pre_complete("()")
-smap <c-j> <Plug>(complete_parameter#goto_next_parameter)
-imap <c-j> <Plug>(complete_parameter#goto_next_parameter)
-smap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
-imap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
-
-"Accelerated-ws设置
-nmap s <Plug>(accelerated_jk_gj)
-nmap w <Plug>(accelerated_jk_gk)
-
-"Easymotion设置
-let g:EasyMotion_do_mapping = 0
-let g:EasyMotion_do_shade = 0
-let g:EasyMotion_smartcase = 1
-map ' <Plug>(easymotion-overwin-f2)
-nmap ' <Plug>(easymotion-overwin-f2)
-vmap ' <Plug>(easymotion-overwin-f2)
-
-"Vista设置
-noremap <LEADER>v :Vista<CR>
-let g:vista#renderer#enable_icon = 1
-let g:vista_disable_statusline = 1
-let g:vista_default_executive = 'ctags'
-let g:vista_echo_cursor_strategy = 'floating_win'
-let g:vista_vimwiki_executive = 'markdown'
-let g:vista_executive_for = {
-			\ 'vimwiki': 'markdown',
-			\ 'pandoc': 'markdown',
-			\ 'markdown': 'toc',
-			\ 'yaml': 'coc',
-			\ 'typescript': 'coc',
-			\ 'typescriptreact': 'coc',
-			\ }
-
-"Translator设置
-nmap <silent> <Leader>ts <Plug>TranslateW
-vmap <silent> <Leader>ts <Plug>TranslateWV
-let g:translator_window_max_width=0.3
-let g:translator_window_max_height=0.3
-let g:translator_default_engines=['youdao' , 'google']
-
-"Vim-table-mode设置
+" ===
+" === vim-table-mode
+" ===
 noremap <LEADER>tm :TableModeToggle<CR>
+"let g:table_mode_disable_mappings = 1
 let g:table_mode_cell_text_object_i_map = 'k<Bar>'
 
-"Neoformat设置
-nnoremap <LEADER>fm :Neoformat<CR>
-
-"FZF模糊搜索设置
-" nmap <C-z> :<C-u>SessionSave<CR>
-" nmap <C-x> :<C-u>SessionLoad<CR>
-" nnoremap <silent> <C-h> :History<CR>
-" nnoremap <silent> <C-p> :Files<CR>
-" nnoremap <silent> <C-t> :Colors<CR>
-" nnoremap <silent> <C-f> :Rg<CR>
-" nnoremap <silent> <C-m> :Marks<CR>
-
-nmap <Leader>ss :<C-u>SessionSave<CR>
-nmap <Leader>sl :<C-u>SessionLoad<CR>
-nmap <Leader>cn :<C-u>DashboardNewFile<CR>
-nnoremap <silent> <Leader>fh :History<CR>
-nnoremap <silent> <Leader>ff :Files<CR>
-nnoremap <silent> <Leader>tc :Colors<CR>
-nnoremap <silent> <Leader>fa :Rg<CR>
-nnoremap <silent> <Leader>fb :Marks<CR>
+" ===
+" === FZF
+" ===
+nnoremap <c-p> :Leaderf file<CR>
+" noremap <silent> <C-p> :Files<CR>
+noremap <silent> <C-f> :Rg<CR>
+noremap <silent> <C-h> :History<CR>
+"noremap <C-t> :BTags<CR>
+" noremap <silent> <C-l> :Lines<CR>
+noremap <silent> <C-w> :Buffers<CR>
+noremap <leader>; :History:<CR>
 
 let g:fzf_preview_window = 'right:60%'
 let g:fzf_commits_log_options = '--graph --color=always --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 
 function! s:list_buffers()
-	redir => list
-	silent ls
-	redir END
-	return split(list, "\n")
+  redir => list
+  silent ls
+  redir END
+  return split(list, "\n")
 endfunction
 
 function! s:delete_buffers(lines)
-	execute 'bwipeout' join(map(a:lines, {_, line -> split(line)[0]}))
+  execute 'bwipeout' join(map(a:lines, {_, line -> split(line)[0]}))
 endfunction
 
 command! BD call fzf#run(fzf#wrap({
-			\ 'source': s:list_buffers(),
-			\ 'sink*': { lines -> s:delete_buffers(lines) },
-			\ 'options': '--multi --reverse --bind ctrl-a:select-all+accept'
-			\ }))
+  \ 'source': s:list_buffers(),
+  \ 'sink*': { lines -> s:delete_buffers(lines) },
+  \ 'options': '--multi --reverse --bind ctrl-a:select-all+accept'
+\ }))
 
 noremap <c-d> :BD<CR>
 
-let g:fzf_layout = { 'window': { 'width': 0.7, 'height': 0.6 } }
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.8 } }
 
-" Indentline设置
-let g:indentLine_enabled = 1
-let g:indentLine_char='┆'
-let g:indentLine_fileTypeExclude = ['defx', 'denite','startify','tagbar','vista_kind','vista','coc-explorer','dashboard']
-let g:indentLine_concealcursor = 'niv'
-let g:indentLine_showFirstIndentLevel =1
+" ===
+" === Undotree
+" ===
+noremap L :UndotreeToggle<CR>
+let g:undotree_DiffAutoOpen = 1
+let g:undotree_SetFocusWhenToggle = 1
+let g:undotree_ShortIndicators = 1
+let g:undotree_WindowLayout = 2
+let g:undotree_DiffpanelHeight = 8
+let g:undotree_SplitWidth = 24
+function g:Undotree_CustomMap()
+	nmap <buffer> u <plug>UndotreeNextState
+	nmap <buffer> e <plug>UndotreePreviousState
+	nmap <buffer> U 5<plug>UndotreeNextState
+	nmap <buffer> E 5<plug>UndotreePreviousState
+endfunc
 
+" ===
+" === vim-visual-multi
+" ===
+"let g:VM_theme             = 'iceblue'
+"let g:VM_default_mappings = 0
+let g:VM_leader                     = {'default': ',', 'visual': ',', 'buffer': ','}
+let g:VM_maps                       = {}
+let g:VM_custom_motions             = {'n': 'h', 'i': 'l', 'u': 'k', 'e': 'j', 'N': '0', 'I': '$', 'h': 'e'}
+let g:VM_maps['i']                  = 'k'
+let g:VM_maps['I']                  = 'K'
+let g:VM_maps['Find Under']         = '<C-k>'
+let g:VM_maps['Find Subword Under'] = '<C-k>'
+let g:VM_maps['Find Next']          = ''
+let g:VM_maps['Find Prev']          = ''
+let g:VM_maps['Remove Region']      = 'q'
+let g:VM_maps['Skip Region']        = '<c-n>'
+let g:VM_maps["Undo"]               = 'l'
+let g:VM_maps["Redo"]               = '<C-r>'
 
-"MarkdownPreview设置
+" ===
+" === Bullets.vim
+" ===
+" let g:bullets_set_mappings = 0
+let g:bullets_enabled_file_types = [
+			\ 'markdown',
+			\ 'text',
+			\ 'gitcommit',
+			\ 'scratch'
+			\]
 
- let g:mkdp_auto_start = 0
- let g:mkdp_auto_close = 1
- let g:mkdp_refresh_slow = 0
- let g:mkdp_command_for_global = 0
- let g:mkdp_open_to_the_world = 0
- let g:mkdp_open_ip = ''
- let g:mkdp_browser = 'chromium'
- let g:mkdp_echo_preview_url = 0
- let g:mkdp_browserfunc = ''
- let g:mkdp_preview_options = {
- 		\ 'mkit': {},
- 		\ 'katex': {},
- 		\ 'uml': {},
- 		\ 'maid': {},
- 		\ 'disable_sync_scroll': 0,
- 		\ 'sync_scroll_type': 'middle',
- 		\ 'hide_yaml_meta': 1,
- 		\ 'sequence_diagrams': {},
- 		\ 'flowchart_diagrams': {},
- 		\ 'content_editable': v:false,
- 		\ 'disable_filename': 0
- 		\ }
- let g:mkdp_markdown_css = ''
- let g:mkdp_highlight_css = ''
- let g:mkdp_port = ''
- let g:mkdp_page_title = '「${name}」'
- let g:mkdp_filetypes = ['markdown']
+" ===
+" === Vista.vim
+" ===
+noremap <LEADER>v :Vista!!<CR>
+noremap <c-t> :silent! Vista finder coc<CR>
+let g:vista_icon_indent = ["╰─▸ ", "├─▸ "]
+let g:vista_default_executive = 'coc'
+let g:vista_fzf_preview = ['right:50%']
+let g:vista#renderer#enable_icon = 1
+let g:vista#renderer#icons = {
+\   "function": "\uf794",
+\   "variable": "\uf71b",
+\  }
+" function! NearestMethodOrFunction() abort
+" 	return get(b:, 'vista_nearest_method_or_function', '')
+" endfunction
+" set statusline+=%{NearestMethodOrFunction()}
+" autocmd VimEnter * call vista#RunForNearestMethodOrFunction()
 
-nmap <C-s> <Plug>MarkdownPreview
-nmap <M-s> <Plug>MarkdownPreviewStop
-nmap <C-p> <Plug>MarkdownPreviewToggle
+let g:scrollstatus_size = 15
 
+" ===
+" === fzf-gitignore
+" ===
+noremap <LEADER>gi :FzfGitignore<CR>
 
+" ===
+" === vim-easymotion
+" ===
+let g:EasyMotion_do_mapping = 0
+let g:EasyMotion_do_shade = 0
+let g:EasyMotion_smartcase = 1
 
-" vimwiki
-" let g:vimwiki_list = [{'path': '~/vimwiki/',
-" 										 \ 'syntax': 'markdown', 'ext': '.md'}]
-
-
-"Vim-go设置
-" let g:go_def_mode='gopls'
-" let g:go_info_mode='gopls'
-let g:go_echo_go_info = 0
-let g:go_doc_popup_window = 1
-let g:go_def_mapping_enabled = 0
-let g:go_template_autocreate = 0
-let g:go_textobj_enabled = 0
-let g:go_auto_type_info = 1
-let g:go_def_mapping_enabled = 0
-let g:go_highlight_array_whitespace_error = 1
-let g:go_highlight_build_constraints = 1
-let g:go_highlight_chan_whitespace_error = 1
-let g:go_highlight_extra_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_format_strings = 1
-let g:go_highlight_function_calls = 1
-let g:go_highlight_function_parameters = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_generate_tags = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_space_tab_error = 1
-let g:go_highlight_string_spellcheck = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_trailing_whitespace_error = 1
-let g:go_highlight_types = 1
-let g:go_highlight_variable_assignments = 0
-let g:go_highlight_variable_declarations = 0
-let g:go_doc_keywordprg_enabled = 0
-
-
-"Defx设置
-noremap <LEADER>fe :Defx<CR>
-
-call defx#custom#option('_', {
-			\ 'resume': 1,
-			\ 'winwidth': 30,
-			\ 'split': 'vertical',
-			\ 'direction': 'topleft',
-			\ 'show_ignored_files': 0,
-			\ 'columns': 'mark:indent:git:icons:filename',
-			\ 'root_marker': '',
-			\ })
-
-call defx#custom#column('git', {
-			\   'indicators': {
-			\     'Modified'  : '•',
-			\     'Staged'    : '✚',
-			\     'Untracked' : 'ᵁ',
-			\     'Renamed'   : '≫',
-			\     'Unmerged'  : '≠',
-			\     'Ignored'   : 'ⁱ',
-			\     'Deleted'   : '✖',
-			\     'Unknown'   : '⁇'
-			\   }
-			\ })
-
-call defx#custom#column('mark', { 'readonly_icon': '', 'selected_icon': '' })
-
-augroup user_plugin_defx
-	autocmd!
-	autocmd FileType defx call <SID>defx_mappings()
-	autocmd WinEnter * if &filetype == 'defx' && winnr('$') == 1 | bdel | endif
-	autocmd TabLeave * if &filetype == 'defx' | wincmd w | endif
-augroup END
-
-function! s:jump_dirty(dir) abort
-	let l:icons = get(g:, 'defx_git_indicators', {})
-	let l:icons_pattern = join(values(l:icons), '\|')
-
-	if ! empty(l:icons_pattern)
-		let l:direction = a:dir > 0 ? 'w' : 'bw'
-		return search(printf('\(%s\)', l:icons_pattern), l:direction)
-	endif
-endfunction
-
-function! s:defx_toggle_tree() abort
-	if defx#is_directory()
-		return defx#do_action('open_or_close_tree')
-	endif
-	return defx#do_action('multi', ['drop'])
-endfunction
-
-function! s:defx_mappings() abort
-	setlocal signcolumn=no expandtab
-	nnoremap <silent><buffer><expr> <CR>     <SID>defx_toggle_tree()                    " 打开或者关闭文件夹，文件
-	nnoremap <silent><buffer><expr> <C-h>     defx#do_action('toggle_ignored_files')     " 显示隐藏文件
-	nnoremap <silent><buffer><expr> c defx#do_action('copy')
-	nnoremap <silent><buffer><expr> m defx#do_action('move')
-	nnoremap <silent><buffer><expr> p defx#do_action('paste')
-	nnoremap <silent><buffer><expr> d defx#do_action('open')
-	nnoremap <silent><buffer><expr> K defx#do_action('new_directory')
-	nnoremap <silent><buffer><expr> N defx#do_action('new_file')
-	nnoremap <silent><buffer><expr> M defx#do_action('new_multiple_files')
-	nnoremap <silent><buffer><expr> C defx#do_action('toggle_columns', 'mark:indent:icon:filename:type:size:time')
-	nnoremap <silent><buffer><expr> S defx#do_action('toggle_sort', 'time')
-	nnoremap <silent><buffer><expr> x defx#do_action('remove')
-	nnoremap <silent><buffer><expr> r defx#do_action('rename')
-	nnoremap <silent><buffer><expr> ! defx#do_action('execute_command')
-	nnoremap <silent><buffer><expr> l defx#do_action('execute_system')
-	nnoremap <silent><buffer><expr> yy defx#do_action('yank_path')
-	nnoremap <silent><buffer><expr> <C-h> defx#do_action('toggle_ignored_files')
-	nnoremap <silent><buffer><expr> ; defx#do_action('repeat')
-	nnoremap <silent><buffer><expr> a defx#do_action('cd', ['..'])
-	nnoremap <silent><buffer><expr> ~ defx#do_action('cd')
-	nnoremap <silent><buffer><expr> q defx#do_action('quit')
-	nnoremap <silent><buffer><expr> <Space> defx#do_action('toggle_select') . 'j'
-	nnoremap <silent><buffer><expr> * defx#do_action('toggle_select_all')
-	nnoremap <silent><buffer><expr> j line('.') == line('$') ? 'gg' : 'j'
-	nnoremap <silent><buffer><expr> k line('.') == 1 ? 'G' : 'k'
-	nnoremap <silent><buffer><expr> <C-g> defx#do_action('print')
-	nnoremap <silent><buffer><expr> cd defx#do_action('change_vim_cwd')
-	nnoremap <silent><buffer><expr> u   defx#do_action('cd', ['..'])
-	nnoremap <silent><buffer><expr> 2u  defx#do_action('cd', ['../..'])
-	nnoremap <silent><buffer><expr> 3u  defx#do_action('cd', ['../../..'])
-	nnoremap <silent><buffer><expr> 4u  defx#do_action('cd', ['../../../..'])
-
-endfunction
-
-function! s:defx_toggle_tree() abort
-	if defx#is_directory()
-		return defx#do_action('open_or_close_tree')
-	endif
-	return defx#do_action('multi', ['drop'])
-endfunction
-
-function! s:defx_toggle_tree() abort
-	if defx#is_directory()
-		return defx#do_action('open_or_close_tree')
-	endif
-	return defx#do_action('multi', ['drop'])
-endfunction
-
-let g:defx_icons_column_length = 2
-let g:defx_icons_mark_icon = ''
-let g:defx_icons_parent_icon = ""
-" Rainbow_Parenthess设置
-let g:rbpt_colorpairs = [
-			\ ['brown',       'RoyalBlue3'],
-			\ ['Darkblue',    'SeaGreen3'],
-			\ ['darkgray',    'DarkOrchid3'],
-			\ ['darkgreen',   'firebrick3'],
-			\ ['darkcyan',    'RoyalBlue3'],
-			\ ['darkred',     'SeaGreen3'],
-			\ ['darkmagenta', 'DarkOrchid3'],
-			\ ['brown',       'firebrick3'],
-			\ ['gray',        'RoyalBlue3'],
-			\ ['black',       'SeaGreen3'],
-			\ ['darkmagenta', 'DarkOrchid3'],
-			\ ['Darkblue',    'firebrick3'],
-			\ ['darkgreen',   'RoyalBlue3'],
-			\ ['darkcyan',    'SeaGreen3'],
-			\ ['darkred',     'DarkOrchid3'],
-			\ ['red',         'firebrick3'],
-			\ ]
-let g:rbpt_max = 16
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
-
-"NerdCommenter设置
-let g:NERDSpaceDelims            = 1
-let g:NERDCompactSexyComs        = 1
-let g:NERDDefaultAlign           = 'left'
-let g:NERDAltDelims_java         = 1
-let g:NERDCustomDelimiters       = {'c': {'left': '/*', 'right': '*/'}}
-let g:NERDCommentEmptyLines      = 1
-let g:NERDTrimTrailingWhitespace = 1
-let g:NERDToggleCheckAllLines    = 1
-
-"goyo设置
+" ===
+" === goyo
+" ===
 map <LEADER>gy :Goyo<CR>
 
+" ===
+" === vim-markdown-toc
+" ===
+"let g:vmt_auto_update_on_save = 0
+"let g:vmt_dont_insert_fence = 1
+let g:vmt_cycle_list_item_markers = 1
+let g:vmt_fence_text = 'TOC'
+let g:vmt_fence_closing_text = '/TOC'
+
+" ===
+" === rnvimr
+" ===
+let g:rnvimr_ex_enable = 1
+let g:rnvimr_pick_enable = 1
+let g:rnvimr_draw_border = 0
+" let g:rnvimr_bw_enable = 1
+highlight link RnvimrNormal CursorLine
+nnoremap <silent> R :RnvimrToggle<CR><C-\><C-n>:RnvimrResize 0<CR>
+let g:rnvimr_action = {
+            \ '<C-t>': 'NvimEdit tabedit',
+            \ '<C-x>': 'NvimEdit split',
+            \ '<C-v>': 'NvimEdit vsplit',
+            \ 'gw': 'JumpNvimCwd',
+            \ 'yw': 'EmitRangerCwd'
+            \ }
+let g:rnvimr_layout = { 'relative': 'editor',
+            \ 'width': &columns,
+            \ 'height': &lines,
+            \ 'col': 0,
+            \ 'row': 0,
+            \ 'style': 'minimal' }
+let g:rnvimr_presets = [{'width': 1.0, 'height': 1.0}]
+
+" ===
+" === nvim-treesitter
+" ===
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = {"typescript", "dart", "java"},     -- one of "all", "language", or a list of languages
+  highlight = {
+    enable = true,              -- false will disable the whole extension
+    disable = { "c", "rust" },  -- list of language that will be disabled
+  },
+}
+EOF
+
+" ===
+" === lazygit.nvim
+" ===
+noremap <c-g> :LazyGit<CR>
+let g:lazygit_floating_window_winblend = 0 " transparency of floating window
+let g:lazygit_floating_window_scaling_factor = 1.0 " scaling factor for floating window
+let g:lazygit_floating_window_corner_chars = ['╭', '╮', '╰', '╯'] " customize lazygit popup window corner characters
+let g:lazygit_use_neovim_remote = 1 " for neovim-remote support
 
 
-"============
-"美化插件设置
-"============
 
-"Dashboard设置
+" ===
+" === Dress up my nvim
+" ===
+
+set termguicolors " enable true colors support
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+
+"Dashboard
 " let g:dashboard_custom_header = [
 "       \ '',
 "       \ '███████╗██╗   ██╗ ██████╗ ██╗    ██╗   ██╗███████╗    ██╗',
@@ -350,7 +218,7 @@ map <LEADER>gy :Goyo<CR>
 "       \ '███████╗ ╚████╔╝ ╚██████╔╝███████╗╚████╔╝ ███████╗    ██╗',
 "       \ '╚══════╝  ╚═══╝   ╚═════╝ ╚══════╝ ╚═══╝  ╚══════╝    ╚═╝',
 "       \ '',
-"       \ '                       [KyleJKC]',
+"       \ '                       [Aristolon]',
 "       \ '',
 "       \ ]
 let g:dashboard_preview_command = 'cat'
@@ -379,14 +247,100 @@ let g:dashboard_custom_shortcut={
 			\ }
 noremap <LEADER>fn :DashboardNewFile<CR>
 
-"Galaxyline设置
+"Galaxyline
 luafile ~/.config/nvim/theme/eviline.lua
 
-"vim-easy-align设置
-xmap ga <Plug>(EasyAlign)
-nmap ga <Plug>(EasyAlign)
+" ===
+" === rust-analyzer LSP and the completion
 
-"Vim-buffet设置
+" ===
+" Set completeopt to have a better completion experience
+" :help completeopt
+" menuone: popup even when there's only one match
+" noinsert: Do not insert text until a selection is made
+" noselect: Do not select, force user to select one from the menu
+set completeopt=menuone,noinsert,noselect
+
+" Avoid showing extra messages when using completion
+set shortmess+=c
+
+" Configure LSP through rust-tools.nvim plugin.
+" rust-tools will configure and enable certain LSP features for us.
+" See https://github.com/simrat39/rust-tools.nvim#configuration
+lua <<EOF
+local nvim_lsp = require'lspconfig'
+
+local opts = {
+    tools = { -- rust-tools options
+        autoSetHints = true,
+        hover_with_actions = true,
+        inlay_hints = {
+            show_parameter_hints = false,
+            parameter_hints_prefix = "",
+            other_hints_prefix = "",
+        },
+    },
+
+    -- all the opts to send to nvim-lspconfig
+    -- these override the defaults set by rust-tools.nvim
+    -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
+    server = {
+        -- on_attach is a callback called when the language server attachs to the buffer
+        -- on_attach = on_attach,
+        settings = {
+            -- to enable rust-analyzer settings visit:
+            -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
+            ["rust-analyzer"] = {
+                -- enable clippy on save
+                checkOnSave = {
+                    command = "clippy"
+                },
+            }
+        }
+    },
+}
+
+require('rust-tools').setup(opts)
+EOF
+
+" Setup Completion
+" See https://github.com/hrsh7th/nvim-cmp#basic-configuration
+lua <<EOF
+local cmp = require'cmp'
+cmp.setup({
+  -- Enable LSP snippets
+  snippet = {
+    expand = function(args)
+        vim.fn["vsnip#anonymous"](args.body)
+    end,
+  },
+  mapping = {
+    ['<C-p>'] = cmp.mapping.select_prev_item(),
+    ['<C-n>'] = cmp.mapping.select_next_item(),
+    -- Add tab support
+    ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+    ['<Tab>'] = cmp.mapping.select_next_item(),
+    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.close(),
+    ['<CR>'] = cmp.mapping.confirm({
+      behavior = cmp.ConfirmBehavior.Insert,
+      select = true,
+    })
+  },
+
+  -- Installed sources
+  sources = {
+    { name = 'nvim_lsp' },
+    { name = 'vsnip' },
+    { name = 'path' },
+    { name = 'buffer' },
+  },
+})
+EOF
+
+"Vim-buffet
 nmap <leader>1 <Plug>BuffetSwitch(1)
 nmap <leader>2 <Plug>BuffetSwitch(2)
 nmap <leader>3 <Plug>BuffetSwitch(3)

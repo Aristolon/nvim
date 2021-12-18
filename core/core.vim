@@ -7,16 +7,19 @@
 " ╚═════╝ ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝ ╚═══╝  ╚═╝╚═╝     ╚═╝
 
 "============
-"首次安装使用
+"Auto load for first time uses
 "============
-"Vim-Plug的首次下载安装
-if empty(glob('~/.config/nvim/autoload/plug.vim'))
-	silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
+if empty(glob($HOME.'/.config/nvim/autoload/plug.vim'))
+	silent !curl -fLo $HOME/.config/nvim/autoload/plug.vim --create-dirs
 				\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-"模块化配置
+if empty(glob($HOME.'/.config/nvim/plugged/wildfire.vim/autoload/wildfire.vim'))
+	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+"Modular configuration
 source ~/.config/nvim/core/general_config.vim
 source ~/.config/nvim/core/key_bindings.vim
 source ~/.config/nvim/core/special_config.vim

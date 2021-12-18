@@ -8,6 +8,6 @@
 
 " Github@KyleJKC
 " Bilibili@kyleJKC
-" 真的，我用的上面这位大神的模板，超好用，不过我用Colemak
+" 真的，我用的上面这位大神的框架，超好用，不过我用Colemak
 " 喜欢的话请搜索上面
 execute 'source' fnamemodify(expand('<sfile>'), ':h').'/core/core.vim'
