@@ -51,29 +51,35 @@ Plug 'mbbill/undotree'
 Plug 'kdheepak/lazygit.nvim'
 
 "===
-"=== All For Rust Below
+"=== All For Rust
 "===
 " Collection of common configurations for the Nvim LSP client
-Plug 'neovim/nvim-lspconfig'
+" Plug 'neovim/nvim-lspconfig'
 " Completion framework
-Plug 'hrsh7th/nvim-cmp'
+" Plug 'hrsh7th/nvim-cmp'
 " LSP completion source for nvim-cmp
-Plug 'hrsh7th/cmp-nvim-lsp'
+" Plug 'hrsh7th/cmp-nvim-lsp'
 " Snippet completion source for nvim-cmp
-Plug 'hrsh7th/cmp-vsnip'
+" Plug 'hrsh7th/cmp-vsnip'
 " Other usefull completion sources
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-buffer'
+" Plug 'hrsh7th/cmp-path'
+" Plug 'hrsh7th/cmp-buffer'
 " To enable more of the features of rust-analyzer, such as inlay hints and more!
-Plug 'simrat39/rust-tools.nvim'
+" Plug 'simrat39/rust-tools.nvim'
 " Fuzzy finder
 " Optional
-Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
+" Plug 'nvim-lua/popup.nvim'
+" Plug 'nvim-lua/plenary.nvim'
+" Plug 'nvim-telescope/telescope.nvim'
 " Flutter
-Plug 'dart-lang/dart-vim-plugin'
-Plug 'f-person/pubspec-assist-nvim', { 'for' : ['pubspec.yaml'] }
+" Plug 'dart-lang/dart-vim-plugin'
+" Plug 'f-person/pubspec-assist-nvim', { 'for' : ['pubspec.yaml'] }
+
+Plug 'rust-lang/rust.vim'
+Plug 'racer-rust/vim-racer'
+"========================================================================"
+
+
 
 " Markdown
 Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
@@ -82,6 +88,7 @@ Plug 'mzlogin/vim-markdown-toc', { 'for': ['gitignore', 'markdown', 'vim-plug'] 
 Plug 'dkarter/bullets.vim'
 
 " Editor Enhancement
+Plug 'preservim/nerdcommenter' 
 Plug 'gcmt/wildfire.vim' " in Visual mode, type k' to select all text in '', or type k) k] k} kp
 Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 Plug 'easymotion/vim-easymotion'

@@ -251,95 +251,130 @@ noremap <LEADER>fn :DashboardNewFile<CR>
 "Galaxyline
 luafile ~/.config/nvim/theme/eviline.lua
 
-" ===
-" === rust-analyzer LSP and the completion
+"rust.vim
+syntax enable
+filetype  plugin indent on
+let g:rustfmt_autosave = 1 " 保存时代码自动格式化
+" Visual 模式下格式化
+vnoremap <leader>ft :RustFmtRanger<CR>
+" Normal 模式下整体格式化
+nnoremap <leader>ft :RustFmtRanger<CR>
+" Alt-t 检查占用，快捷键绑定
+nnoremap <M-t> :RustTest<CR>
 
-" ===
-" Set completeopt to have a better completion experience
-" :help completeopt
-" menuone: popup even when there's only one match
-" noinsert: Do not insert text until a selection is made
-" noselect: Do not select, force user to select one from the menu
-set completeopt=menuone,noinsert,noselect
+"Nerdcommenter
+" Create default mappings
+let g:NERDCreateDefaultMappings = 1
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+" Enable NERDCommenterToggle to check all selected lines is commented or not 
+let g:NERDToggleCheckAllLines = 1
 
-" Avoid showing extra messages when using completion
-set shortmess+=c
+"racer-vim
+let g:racer_cmd = "/home/lxc/.cargo/bin/racer"
 
-" Configure LSP through rust-tools.nvim plugin.
-" rust-tools will configure and enable certain LSP features for us.
-" See https://github.com/simrat39/rust-tools.nvim#configuration
-lua <<EOF
-local nvim_lsp = require'lspconfig'
-
-local opts = {
-    tools = { -- rust-tools options
-        autoSetHints = true,
-        hover_with_actions = true,
-        inlay_hints = {
-            show_parameter_hints = false,
-            parameter_hints_prefix = "",
-            other_hints_prefix = "",
-        },
-    },
-
-    -- all the opts to send to nvim-lspconfig
-    -- these override the defaults set by rust-tools.nvim
-    -- see https://github.com/neovim/nvim-lspconfig/blob/master/CONFIG.md#rust_analyzer
-    server = {
-        -- on_attach is a callback called when the language server attachs to the buffer
-        -- on_attach = on_attach,
-        settings = {
-            -- to enable rust-analyzer settings visit:
-            -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
-            ["rust-analyzer"] = {
-                -- enable clippy on save
-                checkOnSave = {
-                    command = "clippy"
-                },
-            }
-        }
-    },
-}
-
-require('rust-tools').setup(opts)
-EOF
-
-" Setup Completion
-" See https://github.com/hrsh7th/nvim-cmp#basic-configuration
-lua <<EOF
-local cmp = require'cmp'
-cmp.setup({
-  -- Enable LSP snippets
-  snippet = {
-    expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body)
-    end,
-  },
-  mapping = {
-    ['<C-p>'] = cmp.mapping.select_prev_item(),
-    ['<C-n>'] = cmp.mapping.select_next_item(),
-    -- Add tab support
-    ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-    ['<Tab>'] = cmp.mapping.select_next_item(),
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<C-e>'] = cmp.mapping.close(),
-    ['<CR>'] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Insert,
-      select = true,
-    })
-  },
-
-  -- Installed sources
-  sources = {
-    { name = 'nvim_lsp' },
-    { name = 'vsnip' },
-    { name = 'path' },
-    { name = 'buffer' },
-  },
-})
-EOF
+" "===
+" "=== ALL FOR RUST
+" "===
+"
+" " Set completeopt to have a better completion experience
+" " :help completeopt
+" " menuone: popup even when there's only one match
+" " noinsert: Do not insert text until a selection is made
+" " noselect: Do not select, force user to select one from the menu
+" set completeopt=menuone,noinsert,noselect
+"
+" " Avoid showing extra messages when using completion
+" set shortmess+=c
+"
+" " Configure LSP through rust-tools.nvim plugin.
+" " rust-tools will configure and enable certain LSP features for us.
+" " See https://github.com/simrat39/rust-tools.nvim#configuration
+" lua <<EOF
+" local nvim_lsp = require'lspconfig'
+"
+" local opts = {
+"     tools = { -- rust-tools options
+"         autoSetHints = true,
+"         hover_with_actions = true,
+"         inlay_hints = {
+"             show_parameter_hints = false,
+"             parameter_hints_prefix = "",
+"             other_hints_prefix = "",
+"         },
+"     },
+"
+"     -- all the opts to send to nvim-lspconfig
+"     -- these override the defaults set by rust-tools.nvim
+"     -- see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
+"     server = {
+"         -- on_attach is a callback called when the language server attachs to the buffer
+"         -- on_attach = on_attach,
+"         settings = {
+"             -- to enable rust-analyzer settings visit:
+"             -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
+"             ["rust-analyzer"] = {
+"                 -- enable clippy on save
+"                 checkOnSave = {
+"                     command = "clippy"
+"                 },
+"             }
+"         }
+"     },
+" }
+"
+" require('rust-tools').setup(opts)
+" EOF
+"
+" " Setup Completion
+" " See https://github.com/hrsh7th/nvim-cmp#basic-configuration
+" lua <<EOF
+" local cmp = require'cmp'
+" cmp.setup({
+"   -- Enable LSP snippets
+"   snippet = {
+"     expand = function(args)
+"         vim.fn["vsnip#anonymous"](args.body)
+"     end,
+"   },
+"   mapping = {
+"     ['<C-p>'] = cmp.mapping.select_prev_item(),
+"     ['<C-n>'] = cmp.mapping.select_next_item(),
+"     -- Add tab support
+"     ['<S-Tab>'] = cmp.mapping.select_prev_item(),
+"     ['<Tab>'] = cmp.mapping.select_next_item(),
+"     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+"     ['<C-f>'] = cmp.mapping.scroll_docs(4),
+"     ['<C-Space>'] = cmp.mapping.complete(),
+"     ['<C-e>'] = cmp.mapping.close(),
+"     ['<CR>'] = cmp.mapping.confirm({
+"       behavior = cmp.ConfirmBehavior.Insert,
+"       select = true,
+"     })
+"   },
+"
+"   -- Installed sources
+"   sources = {
+"     { name = 'nvim_lsp' },
+"     { name = 'vsnip' },
+"     { name = 'path' },
+"     { name = 'buffer' },
+"   },
+" })
+" EOF
+" "=== END OF ALL FOR RUST ==="
 
 "Vim-buffet
 nmap <leader>1 <Plug>BuffetSwitch(1)

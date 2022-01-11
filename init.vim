@@ -8,6 +8,7 @@
 
 " Github@KyleJKC
 " Bilibili@kyleJKC
-" 真的，我用的上面这位大神的框架，超好用，不过我用Colemak
-" 喜欢的话请搜索上面
+" It’s true. I’m using the framework of KyleJKC’s.
+" That is great, but I’m using Colemak.
+" If you like it, check out the links above.
 execute 'source' fnamemodify(expand('<sfile>'), ':h').'/core/core.vim'
